@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Month, Babydoll! ✨ | 30 Days of Love for Annu</title>
+  <meta name="description" content="A special, playful, interactive 30-day birthday month countdown & celebration website created with infinite love for Anakha (Annu / Babydoll).">
+
+  <!-- Google Fonts: Great Vibes (Romantic Script) & Outfit (Modern Premium Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Canvas for Romantic Starry Background & Floating Hearts -->
+  <canvas id="starryCanvas" aria-hidden="true"></canvas>
+
+  <!-- Sound Toggle Floating Button -->
+  <button id="soundToggleBtn" class="sound-toggle-btn" aria-label="Toggle Sound Effects" title="Toggle Sound">
+    <span class="sound-icon" id="soundIcon">🔊</span>
+    <span class="sound-label">Sound: <span id="soundStatusText">ON</span></span>
+  </button>
+
+  <!-- Top Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="heart-pulse">💖</span>
+        <span class="logo-text">Annu's Birthday Galaxy</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#hero" class="nav-link">✨ Welcome</a>
+        <a href="#arrowGameSection" class="nav-link">🏹 Cupid's Arrow</a>
+        <a href="#runawayNoSection" class="nav-link">🏃‍♀️ The "NO" Game</a>
+        <a href="#calendarSection" class="nav-link">📅 30 Days of Love</a>
+        <a href="#biryaniGameSection" class="nav-link">🍲 Biryani Catcher</a>
+        <a href="#reasonsSection" class="nav-link">💌 Love Notes</a>
+        <a href="#cakeSection" class="nav-link">🎂 Cake & Wishes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="hero-container">
+        
+        <div class="hero-badge">
+          <span class="sparkle">✨</span>
+          <span>Official Birthday Month Celebration • 1st Nov – 30th Nov</span>
+          <span class="sparkle">✨</span>
+        </div>
+
+        <h1 class="hero-title">
+          Happy Birthday Month, <br>
+          <span class="gradient-text script-font">Babydoll!</span> 💖
+        </h1>
+
+        <p class="hero-subtitle">
+          Welcome to your 30-day universe, <strong>Anakha</strong> (my forever <em>Annu</em>, my cutest Babydoll)! 
+          From the heroics of Captain America to the poetry of Taylor Swift, the passion of Bajirao-Mastani, 
+          and all the midnight Biryani cravings in between—every single day this November is dedicated to celebrating <strong>YOU</strong>.
+        </p>
+
+        <!-- Romantic Couple Art Card with Fairy Lights -->
+        <div class="hero-art-wrapper">
+          <div class="fairy-lights">
+            <span class="light red"></span>
+            <span class="light gold"></span>
+            <span class="light blue"></span>
+            <span class="light pink"></span>
+            <span class="light gold"></span>
+            <span class="light red"></span>
+            <span class="light blue"></span>
+          </div>
+          <div class="hero-image-frame">
+            <img src="./assets/hero-bg.jpg" alt="Romantic fairy-tale birthday art with palace, stars, roses, and birthday cake" class="hero-art-img" id="heroArtImg">
+            <div class="hero-overlay-tag">
+              <span>"I can love you all day, Annu" 🛡️✨</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 30th November Countdown Timer -->
+        <div class="countdown-card glass-panel" id="countdownCard">
+          <h2 class="countdown-heading">
+            <span class="icon">⏳</span> Countdown to 30th November Grand Finale!
+          </h2>
+          <div class="countdown-timer" id="countdownTimer">
+            <div class="time-block">
+              <span class="time-number" id="countDays">29</span>
+              <span class="time-label">Days</span>
+            </div>
+            <div class="time-separator">:</div>
+            <div class="time-block">
+              <span class="time-number" id="countHours">00</span>
+              <span class="time-label">Hours</span>
+            </div>
+            <div class="time-separator">:</div>
+            <div class="time-block">
+              <span class="time-number" id="countMinutes">00</span>
+              <span class="time-label">Minutes</span>
+            </div>
+            <div class="time-separator">:</div>
+            <div class="time-block">
+              <span class="time-number" id="countSeconds">00</span>
+              <span class="time-label">Seconds</span>
+            </div>
+          </div>
+          <p class="countdown-caption">
+            ✨ Today is Day 1! 30 days of games, inside jokes, and daily love surprises await you below! ✨
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#arrowGameSection" class="btn btn-primary pulse-btn">
+            <span>🏹 Fire Cupid's Arrow</span>
+          </a>
+          <a href="#calendarSection" class="btn btn-secondary">
+            <span>📅 Open Today's Love Surprise</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAME 1: CUPID & CAP'S ARROW TO HEART GAME -->
+    <section class="game-section" id="arrowGameSection">
+      <div class="section-header">
+        <span class="section-tag">Mini-Game #1 • Interactive Aim & Shoot</span>
+        <h2 class="section-title">🏹 Cupid & Cap's Heart Shooter</h2>
+        <p class="section-desc">
+          Drag back the bow with your mouse or finger, aim for Annu's floating heart, shield, or Biryani pot, and release to shoot! 
+          Hit the targets to unlock secret love notes and high-score multipliers!
+        </p>
+      </div>
+
+      <div class="arrow-game-container glass-panel">
+        <div class="game-hud">
+          <div class="hud-item">
+            <span class="hud-label">Love Score</span>
+            <span class="hud-val" id="arrowScore">0</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">Hits</span>
+            <span class="hud-val" id="arrowHits">0 / 5 Target</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">Multiplier</span>
+            <span class="hud-val" id="arrowStreak">1x Combo 🔥</span>
+          </div>
+          <button class="btn btn-sm btn-ghost" id="resetArrowGameBtn">🔄 Reset Targets</button>
+        </div>
+
+        <div class="canvas-wrapper">
+          <canvas id="arrowCanvas" width="900" height="460" aria-label="Interactive Bow and Arrow Game Canvas"></canvas>
+          <div class="arrow-hint-overlay" id="arrowHintOverlay">
+            <div class="hint-content">
+              <span class="hint-hand">👆</span>
+              <p>Click & Drag bow on the left, aim at the floating hearts, and release!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Latest Message Unlocked from Arrow Hit -->
+        <div class="arrow-reward-box" id="arrowRewardBox">
+          <div class="reward-icon" id="rewardIcon">💖</div>
+          <div class="reward-content">
+            <h3 class="reward-title" id="rewardTitle">Take Your First Shot, Babydoll!</h3>
+            <p class="reward-text" id="rewardText">Hit the glowing hearts, Cap's Vibranium shield, or Taylor's golden stars to reveal romantic surprises!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAME 2: THE IMPOSSIBLE "NO" GAME (RUNAWAY BUTTON) -->
+    <section class="game-section" id="runawayNoSection">
+      <div class="section-header">
+        <span class="section-tag">Mini-Game #2 • Highly Playful & Impossible</span>
+        <h2 class="section-title">🏃‍♀️ The Impossible "NO" Game</h2>
+        <p class="section-desc">
+          Babydoll, please answer this official, legally binding question with complete honesty! 😉
+        </p>
+      </div>
+
+      <div class="runaway-card glass-panel" id="runawayArena">
+        <div class="runaway-badge">⚠️ Official Girlfriend Inquiry ⚠️</div>
+        <h3 class="runaway-question">
+          "Babydoll (Annu), do you agree that you are the prettiest, sweetest girl in the universe and you will love me forever & ever?"
+        </h3>
+
+        <div class="runaway-subtext">
+          (Careful consideration required. The system monitors your choice!)
+        </div>
+
+        <div class="runaway-buttons-zone" id="buttonsZone">
+          <button id="runawayYesBtn" class="btn btn-yes pulse-glow">
+            <span>YES! Absolutely! 💖✨</span>
+          </button>
+          <button id="runawayNoBtn" class="btn btn-no">
+            <span>No 😜</span>
+          </button>
+        </div>
+
+        <div class="runaway-status-msg" id="runawayStatusMsg">
+          Try hovering or clicking "No"... if you can! 🏃‍♂️💨
+        </div>
+      </div>
+    </section>
+
+    <!-- 30 DAYS OF LOVE CALENDAR (NOV 1 - NOV 30) -->
+    <section class="calendar-section" id="calendarSection">
+      <div class="section-header">
+        <span class="section-tag">November Special • 30 Days Countdown</span>
+        <h2 class="section-title">📅 30 Days of Babydoll</h2>
+        <p class="section-desc">
+          Every day this November opens a new door with custom love notes, Taylor Swift lyric cards, Captain America hero tributes, 
+          Deepika-Ranveer romance dialogues, and delicious Biryani vouchers!
+        </p>
+        <div class="calendar-controls">
+          <span class="cal-status-pill">📍 Today is <strong>Day 1 (1st Nov)</strong></span>
+          <button id="unlockAllDaysBtn" class="btn btn-sm btn-outline">
+            <span>✨ Unlock All Days (Preview Mode)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="calendar-grid" id="calendarGrid">
+        <!-- Generated dynamically via JavaScript: 30 interactive cards -->
+      </div>
+    </section>
+
+    <!-- GAME 3: BIRYANI & LOVE DROP CATCHER -->
+    <section class="game-section" id="biryaniGameSection">
+      <div class="section-header">
+        <span class="section-tag">Mini-Game #3 • Cuteness Overload</span>
+        <h2 class="section-title">🍲 Babydoll's Biryani & Love Catcher</h2>
+        <p class="section-desc">
+          Move Annu's golden heart bowl (using your mouse, finger, or arrow keys) to catch falling hot Dum Biryani pots, 
+          Captain America shields, and Taylor Swift records! Avoid the pesky alarms!
+        </p>
+      </div>
+
+      <div class="biryani-game-box glass-panel">
+        <div class="biryani-hud">
+          <div>🍲 Biryani Score: <strong id="biryaniScoreVal">0</strong> / 100</div>
+          <div>🏆 Best Catch: <strong id="biryaniHighScoreVal">0</strong></div>
+          <button class="btn btn-sm btn-primary" id="startBiryaniGameBtn">🎮 Start Game</button>
+        </div>
+
+        <div class="biryani-canvas-container">
+          <canvas id="biryaniCanvas" width="800" height="420" aria-label="Biryani Catcher Game Canvas"></canvas>
+          <div class="biryani-start-overlay" id="biryaniStartOverlay">
+            <img src="./assets/biryani-love.jpg" alt="Steaming Biryani with hearts" class="biryani-preview-img">
+            <h3>Ready to Feast, Babydoll?</h3>
+            <p>Catch 🍲 Biryani (+20), 🛡️ Shield (+15), 🎵 Swiftie Disc (+15) and 💖 Hearts (+10)!</p>
+            <button class="btn btn-primary" id="overlayStartBtn">Tap to Play!</button>
+          </div>
+        </div>
+
+        <div class="biryani-message-bar" id="biryaniMsgBar">
+          "A hot plate of Dum Biryani with extra love for Annu!" 🍲✨
+        </div>
+      </div>
+    </section>
+
+    <!-- 100 REASONS WHY I LOVE ANNU -->
+    <section class="reasons-section" id="reasonsSection">
+      <div class="section-header">
+        <span class="section-tag">Endless Compliments</span>
+        <h2 class="section-title">💌 100 Reasons Why Annu is Irreplaceable</h2>
+        <p class="section-desc">
+          Click the magical glowing heart whenever you need a reminder of how deeply cherished you are, Babydoll!
+        </p>
+      </div>
+
+      <div class="reasons-card glass-panel">
+        <div class="crystal-heart-btn" id="generateReasonBtn" role="button" tabindex="0" aria-label="Generate new love reason">
+          <div class="glowing-heart-orb">
+            <span class="big-heart">💖</span>
+            <div class="orb-ring"></div>
+            <div class="orb-ring ring-2"></div>
+          </div>
+          <span class="pulse-tip">✨ Click the Heart for a New Reason ✨</span>
+        </div>
+
+        <div class="reason-display-area" id="reasonDisplayArea">
+          <span class="quote-mark">“</span>
+          <p class="reason-text" id="reasonText">
+            Babydoll, from the way your eyes sparkle when you smile to the way you make every ordinary day feel like a grand celebration—loving you is the easiest and most beautiful thing in the world.
+          </p>
+          <span class="quote-mark right">”</span>
+          <div class="reason-footer">
+            <span class="reason-counter" id="reasonCounter">Reason #1 of ∞</span>
+            <button class="btn btn-sm btn-ghost" id="nextReasonBtn">Next Sweet Reason ➡️</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE BIRTHDAY CAKE & CANDLE BLOWING -->
+    <section class="cake-section" id="cakeSection">
+      <div class="section-header">
+        <span class="section-tag">Grand Finale Interactive Moment</span>
+        <h2 class="section-title">🎂 Blow The Birthday Candles!</h2>
+        <p class="section-desc">
+          Make a wish, Babydoll! Click on each candle flame or tap the button to blow them all out and ignite the fireworks!
+        </p>
+      </div>
+
+      <div class="cake-stage glass-panel">
+        <div class="cake-illustration-container">
+          <!-- SVG Interactive Cake with Animated Candle Flames -->
+          <div class="cake-assembly">
+            <div class="candles-row">
+              <div class="candle" data-candle="1">
+                <div class="flame" id="flame1"></div>
+                <div class="wick"></div>
+                <div class="candle-body pink-stripe"></div>
+              </div>
+              <div class="candle" data-candle="2">
+                <div class="flame" id="flame2"></div>
+                <div class="wick"></div>
+                <div class="candle-body gold-stripe"></div>
+              </div>
+              <div class="candle" data-candle="3">
+                <div class="flame" id="flame3"></div>
+                <div class="wick"></div>
+                <div class="candle-body blue-stripe"></div>
+              </div>
+            </div>
+
+            <!-- Cake Layers -->
+            <div class="cake-tier tier-top">
+              <div class="frosting-drips">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="cake-label">30 Nov 🎉</span>
+            </div>
+            <div class="cake-tier tier-middle">
+              <div class="berry-toppings">🍓 🌸 🍓 🌸 🍓</div>
+            </div>
+            <div class="cake-tier tier-bottom">
+              <span class="annu-badge">💖 ANNU • BABYDOLL 💖</span>
+            </div>
+            <div class="cake-plate"></div>
+          </div>
+        </div>
+
+        <div class="cake-controls">
+          <button id="blowCandlesBtn" class="btn btn-primary pulse-btn">
+            <span>🕯️💨 Blow Out The Candles!</span>
+          </button>
+          <button id="relightCandlesBtn" class="btn btn-secondary" style="display: none;">
+            <span>✨ Relight Candles</span>
+          </button>
+        </div>
+
+        <div class="cake-wish-banner" id="cakeWishBanner">
+          <h3 class="wish-title">May all your dreams come true, my love! 🌟</h3>
+          <p class="wish-text">
+            Here's to your happiest birthday month yet, filled with boundless joy, Taylor Swift dance sessions, 
+            endless bowls of biryani, and all the love in the universe!
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL FOR CALENDAR DAYS (30 SURPRISES) -->
+  <div class="modal-overlay" id="calendarModal" aria-hidden="true" role="dialog">
+    <div class="modal-card glass-panel" id="modalCard">
+      <button class="modal-close-btn" id="closeModalBtn" aria-label="Close dialog">&times;</button>
+      <div class="modal-header">
+        <span class="modal-day-badge" id="modalDayBadge">Day 1 • 1st Nov</span>
+        <h3 class="modal-title" id="modalTitle">Welcome to Your Birthday Month!</h3>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge-icon" id="modalBadgeIcon">🎁</div>
+        <p class="modal-text" id="modalText">
+          Loading your personalized message...
+        </p>
+        <div class="modal-special-gift" id="modalSpecialGift">
+          <span class="gift-tag">Special Voucher / Memory:</span>
+          <span class="gift-content" id="modalGiftContent">✨ 1x Unlimited Warm Hugs & Sweet Kisses Voucher ✨</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="modalActionBtn">Collect Love Token 💖</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- YES GAME VICTORY CELEBRATION MODAL -->
+  <div class="modal-overlay" id="victoryModal" aria-hidden="true" role="dialog">
+    <div class="modal-card glass-panel victory-card">
+      <button class="modal-close-btn" id="closeVictoryModalBtn" aria-label="Close dialog">&times;</button>
+      <div class="victory-icon">🎉💃👑</div>
+      <h3 class="victory-title">IT'S OFFICIAL! YOU SAID YES!</h3>
+      <p class="victory-quote">
+        <em>"Dil toh sabhi ke paas hota hai, lekin sab Dilwale nahi hote..."</em> 💖
+      </p>
+      <p class="victory-body">
+        Babydoll, you couldn't escape my love even if you tried! You are officially crowned the undisputed Queen of my heart. 
+        Ranveer and Deepika have got nothing on our love story! 
+        <br><br>
+        Get ready for 30 whole days of pampering, surprises, and unlimited happiness!
+      </p>
+      <div class="victory-actions">
+        <button class="btn btn-primary" id="victoryCloseBtn">Yay! Love You Forever! 🥰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p class="footer-love">
+        Handcrafted with all the love in the universe for <strong>Anakha (Annu / Babydoll)</strong> 💖
+      </p>
+      <p class="footer-credits">
+        Captain America's Loyalty • Taylor Swift's Melodies • Bollywood Romance • Hyderabadi Biryani Love
+      </p>
+      <p class="footer-copy">
+        November 2026 • Forever & Always
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
