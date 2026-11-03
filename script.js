@@ -1179,9 +1179,9 @@
   // Calculate active day of November
   const now = new Date();
   const currentMonth = now.getMonth(); // 10 = November
-  let currentActiveDay = 1;
+  let currentActiveDay = 4; // Default to Nov 4
   if (currentMonth === 10) {
-    currentActiveDay = now.getDate();
+    currentActiveDay = Math.max(1, Math.min(30, now.getDate()));
   } else if (currentMonth > 10) {
     currentActiveDay = 30;
   }
