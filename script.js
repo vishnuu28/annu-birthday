@@ -1128,27 +1128,150 @@
     }
   ];
 
+  const todayStatusPill = document.getElementById('todayStatusPill');
+  const claimedBadgeCounter = document.getElementById('claimedBadgeCounter');
+  const claimedBadgesTrack = document.getElementById('claimedBadgesTrack');
+  const badgeClaimStatus = document.getElementById('badgeClaimStatus');
+  const claimBtnIcon = document.getElementById('claimBtnIcon');
+  const claimBtnText = document.getElementById('claimBtnText');
+  const modalDoneBtn = document.getElementById('modalDoneBtn');
+  const toastNotification = document.getElementById('toastNotification');
+
   let previewMode = false;
+  let activeModalItem = null;
+
+  // Persistent badge storage helpers
+  function getClaimedBadges() {
+    try {
+      const data = localStorage.getItem('annu_claimed_badges');
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveClaimedBadge(dayNum) {
+    const list = getClaimedBadges();
+    if (!list.includes(dayNum)) {
+      list.push(dayNum);
+      localStorage.setItem('annu_claimed_badges', JSON.stringify(list));
+    }
+    return list;
+  }
+
+  let toastTimer = null;
+  function showToast(msg) {
+    if (!toastNotification) return;
+    toastNotification.textContent = msg;
+    toastNotification.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toastNotification.classList.remove('show');
+    }, 3800);
+  }
+
+  function getOrdinal(n) {
+    const s = ["th", "st", "nd", "rd"];
+    const v = n % 100;
+    return s[(v - 20) % 10] || s[v] || s[0];
+  }
+
+  // Calculate active day of November
+  const now = new Date();
+  const currentMonth = now.getMonth(); // 10 = November
+  let currentActiveDay = 1;
+  if (currentMonth === 10) {
+    currentActiveDay = now.getDate();
+  } else if (currentMonth > 10) {
+    currentActiveDay = 30;
+  }
+
+  if (todayStatusPill) {
+    todayStatusPill.innerHTML = `📍 Today is <strong>Day ${currentActiveDay} (${currentActiveDay}${getOrdinal(currentActiveDay)} Nov)</strong> ✨`;
+  }
+
+  function renderTrophyShowcase() {
+    if (!claimedBadgesTrack || !claimedBadgeCounter) return;
+    const claimedList = getClaimedBadges();
+    claimedBadgeCounter.textContent = `${claimedList.length} / 30 Claimed`;
+
+    claimedBadgesTrack.innerHTML = '';
+    if (claimedList.length === 0) {
+      claimedBadgesTrack.innerHTML = `
+        <div class="claimed-badges-empty">
+          ✨ You haven't claimed any badges yet! Open any unlocked day card below and click <strong>"Claim Badge"</strong>, Babydoll! 💖
+        </div>
+      `;
+      return;
+    }
+
+    // Sort ascending by day
+    claimedList.sort((a, b) => a - b);
+
+    claimedList.forEach(dayNum => {
+      const item = daysData.find(d => d.day === dayNum);
+      if (!item) return;
+
+      const badgeItem = document.createElement('div');
+      badgeItem.className = 'claimed-badge-item';
+      badgeItem.setAttribute('role', 'button');
+      badgeItem.setAttribute('tabindex', '0');
+      badgeItem.setAttribute('title', `Click to view Day ${item.day}: ${item.title}`);
+      badgeItem.innerHTML = `
+        <span class="badge-emoji">${item.badge}</span>
+        <span class="badge-day-label">Day ${item.day}</span>
+      `;
+
+      badgeItem.addEventListener('click', () => {
+        openDayModal(item);
+      });
+      badgeItem.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openDayModal(item);
+        }
+      });
+
+      claimedBadgesTrack.appendChild(badgeItem);
+    });
+  }
 
   function renderCalendar() {
     if (!calendarGrid) return;
     calendarGrid.innerHTML = '';
+    const claimedList = getClaimedBadges();
 
     daysData.forEach(item => {
+      const isClaimed = claimedList.includes(item.day);
+      const isToday = item.day === currentActiveDay;
+      const isUnlocked = previewMode || item.day <= currentActiveDay;
+
       const card = document.createElement('div');
-      card.className = `cal-card ${item.day === 1 ? 'today' : ''} ${item.day === 30 ? 'birthday-grand' : ''}`;
+      card.className = `cal-card ${isToday ? 'today' : ''} ${item.day === 30 ? 'birthday-grand' : ''} ${isClaimed ? 'claimed' : ''}`;
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
       card.setAttribute('aria-label', `Open Day ${item.day}: ${item.title}`);
 
+      let pillText = `Day ${item.day}`;
+      if (item.day === 30) {
+        pillText = '👑 GRAND FINALE';
+      } else if (isToday) {
+        pillText = '📍 Today';
+      }
+
       card.innerHTML = `
         <div class="cal-card-top">
           <span class="cal-card-day">Nov ${item.day}</span>
-          <span class="cal-card-pill">${item.day === 1 ? '📍 Today' : (item.day === 30 ? '👑 GRAND FINALE' : 'Day ' + item.day)}</span>
+          <span class="cal-card-pill">${pillText}</span>
         </div>
         <div class="cal-card-icon">${item.badge}</div>
         <h4 class="cal-card-title">${item.title}</h4>
         <span class="cal-card-tag">${item.tag}</span>
+        ${isClaimed 
+          ? '<span class="cal-card-claimed-tag">⭐ CLAIMED</span>' 
+          : (isUnlocked 
+              ? '<span class="cal-card-tag" style="color:#38bdf8;font-weight:700;">✨ Tap to Claim</span>' 
+              : '<span class="cal-card-tag" style="color:#94a3b8;">🔒 Locked</span>')}
       `;
 
       card.addEventListener('click', () => openDayModal(item));
@@ -1161,15 +1284,45 @@
 
       calendarGrid.appendChild(card);
     });
+
+    renderTrophyShowcase();
+  }
+
+  function updateClaimUIState(item) {
+    const isClaimed = getClaimedBadges().includes(item.day);
+    if (isClaimed) {
+      if (claimBtnIcon) claimBtnIcon.textContent = '✅';
+      if (claimBtnText) claimBtnText.textContent = 'Badge Claimed! (In Your Collection) 💖';
+      if (badgeClaimStatus) badgeClaimStatus.textContent = '🌟 CLAIMED! Safely preserved in your Trophy Case! 💖';
+      if (modalActionBtn) {
+        modalActionBtn.classList.remove('pulse-btn');
+        modalActionBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+      }
+    } else {
+      if (claimBtnIcon) claimBtnIcon.textContent = '🏆';
+      if (claimBtnText) claimBtnText.textContent = 'Claim Badge & Voucher! 💖';
+      if (badgeClaimStatus) badgeClaimStatus.textContent = '✨ Tap badge icon or button below to claim! ✨';
+      if (modalActionBtn) {
+        modalActionBtn.classList.add('pulse-btn');
+        modalActionBtn.style.background = '';
+      }
+    }
   }
 
   function openDayModal(item) {
+    activeModalItem = item;
     Sound.playChime();
+
     if (modalDayBadge) modalDayBadge.textContent = `Day ${item.day} • November ${item.day}`;
     if (modalTitle) modalTitle.textContent = item.title;
-    if (modalBadgeIcon) modalBadgeIcon.textContent = item.badge;
+    if (modalBadgeIcon) {
+      modalBadgeIcon.textContent = item.badge;
+      modalBadgeIcon.classList.remove('animate-claim');
+    }
     if (modalText) modalText.textContent = item.text;
     if (modalGiftContent) modalGiftContent.textContent = item.gift;
+
+    updateClaimUIState(item);
 
     if (calendarModal) {
       calendarModal.classList.add('active');
@@ -1182,11 +1335,39 @@
     }
   }
 
-  if (closeModalBtn) closeModalBtn.addEventListener('click', closeDayModal);
-  if (modalActionBtn) {
-    modalActionBtn.addEventListener('click', () => {
+  function claimActiveBadge() {
+    if (!activeModalItem) return;
+    const claimedList = getClaimedBadges();
+    const isAlreadyClaimed = claimedList.includes(activeModalItem.day);
+
+    if (modalBadgeIcon) {
+      modalBadgeIcon.classList.remove('animate-claim');
+      void modalBadgeIcon.offsetWidth; // trigger reflow
+      modalBadgeIcon.classList.add('animate-claim');
+    }
+
+    if (!isAlreadyClaimed) {
+      saveClaimedBadge(activeModalItem.day);
+      Sound.playVictoryFanfare();
+      updateClaimUIState(activeModalItem);
+      renderCalendar();
+      showToast(`🎉 Yay Babydoll! Day ${activeModalItem.day} (${activeModalItem.badge}) claimed and added to your Trophy Case! 💖`);
+    } else {
       Sound.playCatch();
-      closeDayModal();
+      showToast(`💖 Babydoll, you already collected Day ${activeModalItem.day}'s badge! It's shining in your collection! ✨`);
+    }
+  }
+
+  if (closeModalBtn) closeModalBtn.addEventListener('click', closeDayModal);
+  if (modalDoneBtn) modalDoneBtn.addEventListener('click', closeDayModal);
+  if (modalActionBtn) modalActionBtn.addEventListener('click', claimActiveBadge);
+  if (modalBadgeIcon) {
+    modalBadgeIcon.addEventListener('click', claimActiveBadge);
+    modalBadgeIcon.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        claimActiveBadge();
+      }
     });
   }
 
@@ -1195,9 +1376,10 @@
       previewMode = !previewMode;
       Sound.playChime();
       unlockAllDaysBtn.querySelector('span').textContent = previewMode 
-        ? '🔓 All 30 Days Unlocked! (Click any to read)' 
+        ? '🔓 All 30 Days Unlocked! (Click any to read & claim)' 
         : '✨ Unlock All Days (Preview Mode)';
       unlockAllDaysBtn.classList.toggle('btn-primary');
+      renderCalendar();
     });
   }
 

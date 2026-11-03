@@ -219,10 +219,25 @@
           Deepika-Ranveer romance dialogues, and delicious Biryani vouchers!
         </p>
         <div class="calendar-controls">
-          <span class="cal-status-pill">📍 Today is <strong>Day 1 (1st Nov)</strong></span>
+          <span class="cal-status-pill" id="todayStatusPill">📍 Today is <strong>Day 1 (1st Nov)</strong></span>
           <button id="unlockAllDaysBtn" class="btn btn-sm btn-outline">
             <span>✨ Unlock All Days (Preview Mode)</span>
           </button>
+        </div>
+
+        <!-- BABDYDOLL'S CLAIMED BADGES TROPHY SHOWCASE -->
+        <div class="badge-trophy-showcase glass-panel" id="badgeShowcase">
+          <div class="showcase-header">
+            <div class="showcase-title-row">
+              <span class="showcase-icon">🏆</span>
+              <h3 class="showcase-heading">Babydoll's Claimed Badges & Vouchers</h3>
+              <span class="badge-counter-pill" id="claimedBadgeCounter">0 / 30 Claimed</span>
+            </div>
+            <p class="showcase-subtext">Tap any day in the calendar below to claim its badge and add it to your royal collection! 💖</p>
+          </div>
+          <div class="claimed-badges-track" id="claimedBadgesTrack">
+            <!-- Dynamically populated via script.js -->
+          </div>
         </div>
       </div>
 
@@ -378,7 +393,10 @@
         <h3 class="modal-title" id="modalTitle">Welcome to Your Birthday Month!</h3>
       </div>
       <div class="modal-body">
-        <div class="modal-badge-icon" id="modalBadgeIcon">🎁</div>
+        <div class="modal-badge-wrapper">
+          <div class="modal-badge-icon" id="modalBadgeIcon" role="button" tabindex="0" title="Click badge to claim!">🎁</div>
+          <div class="badge-claim-status" id="badgeClaimStatus">Tap badge or button below to claim! ✨</div>
+        </div>
         <p class="modal-text" id="modalText">
           Loading your personalized message...
         </p>
@@ -388,7 +406,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" id="modalActionBtn">Collect Love Token 💖</button>
+        <button class="btn btn-primary pulse-btn" id="modalActionBtn">
+          <span id="claimBtnIcon">🏆</span>
+          <span id="claimBtnText">Claim Badge & Voucher! 💖</span>
+        </button>
+        <button class="btn btn-secondary" id="modalDoneBtn">Close</button>
       </div>
     </div>
   </div>
@@ -428,6 +450,9 @@
       </p>
     </div>
   </footer>
+
+  <!-- Floating Toast Notification for Badge Claim Actions -->
+  <div class="toast-notification" id="toastNotification" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>
